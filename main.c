@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define ERROR_MESSAGE "Lista vazia.\n"
+#define TAM_MAX 100
+
 int main(){
     bool menu = true;
 
     List *list;
 
-    create(&list);
+    create_list(&list);
 
     while (menu == true){
         printf("Escolha uma opção do menu principal.\n");
@@ -21,33 +24,39 @@ int main(){
         int n;
         scanf("%d", &n);
 
+        Student students[TAM_MAX];
+        int i = 0;
+        int id_aux;
         switch (n){
             case 1:
-                Student student;
-                printf("Id do aluno: "); scanf("%d", &student._id);
-                printf("Horas de estudo: "); scanf("%f", &student.study_hours);
-                printf("Nota da prova 1: "); scanf("%f", &student.grade1);
-                printf("Nota da prova 2: "); scanf("%f", &student.grade2);
+                printf("Id do aluno: "); scanf("%d", &students[i]._id);
+                printf("Horas de estudo: "); scanf("%f", &students[i].study_hours);
+                printf("Nota da prova 1: "); scanf("%f", &students[i].grade1);
+                printf("Nota da prova 2: "); scanf("%f", &students[i].grade2);
 
-                insert(&list, student);
+                insert_elem(list, students[i]);
+                i++;
                 break;
 
             case 2:
-                int id_aux;
                 printf("Id do aluno para ser removido: "); scanf("%d", &id_aux);
-                remove(&list, id_aux);
+                if (remove_elem(list, id_aux) == 1)
+                    printf(ERROR_MESSAGE);
                 break;
             
             case 3:
-                print(&list);
+                if (print(list) == 1)
+                    printf(ERROR_MESSAGE);
                 break;
             
             case 4:
-                report(&list);
+                if (report(list) == 1)
+                    printf(ERROR_MESSAGE);
                 break;
             
             case 5:
-                average_study(&list);
+                if (average_study(list) == 1)
+                    printf(ERROR_MESSAGE);
                 break;
             
             case 6:
